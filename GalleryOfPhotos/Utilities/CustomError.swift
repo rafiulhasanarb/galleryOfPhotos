@@ -11,4 +11,5 @@ enum CustomError: Error {
     case BadURL
     case NoData
     case DecodingError
+    case badResponse
 }

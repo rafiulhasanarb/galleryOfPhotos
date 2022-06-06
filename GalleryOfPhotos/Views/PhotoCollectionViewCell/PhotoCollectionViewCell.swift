@@ -8,12 +8,18 @@
 import UIKit
 
 class PhotoCollectionViewCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var photoView: UIImageView!
+    var representedIdentifier: String = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
+    var image: UIImage? {
+        didSet {
+            photoView.image = image
+        }
+    }
 }

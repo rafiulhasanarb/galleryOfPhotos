@@ -6,47 +6,52 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PhotoListViewController: UIViewController {
-
+    //MARK: Outlets
     @IBOutlet weak var photoCollectionView: UICollectionView!
     
-    private let cache = NSCache<NSNumber, UIImage>()
-    private let utilityQueue = DispatchQueue.global(qos: .utility)
-    
+    //MARK: Properties
     var photoList: [PhotosResponseModel] = []
     var page = 1
-    var totalPage = 100
-    //var url = "https://api.unsplash.com/photos?page=1&client_id=Vn0osf3lWAHbbe276LeNI2OHPcjQP3mba4MqxtKZEU8&per_page=100&order_by=latest"
-    
+    var totalPage = 346
+    var isLoading = false
+    var loadingView: LoadingCollectionReusableView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         photoCollectionView.dataSource = self
         photoCollectionView.delegate = self
         photoCollectionView.register(UINib(nibName: Constants.photoCVCell, bundle: nil), forCellWithReuseIdentifier: Constants.photoCVCell)
+        //Register Loading Reuseable View
+        let loadingReusableNib = UINib(nibName: "LoadingCollectionReusableView", bundle: nil)
+        photoCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingCRV")
         //MARK: CollectionView layout
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         photoCollectionView.collectionViewLayout = layout
+        
+        self.getPhotos()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.getPhotos()
+        tabBarController?.tabBar.isHidden = false
     }
     
     private func getPhotos() {
-        NetworkManager().fetchRequest(type: [PhotosResponseModel].self, url: URL(string: Constants.url)!) { photos in
+        NetworkManager().fetchRequest(type: [PhotosResponseModel].self, url: URL(string: Constants.url)!) { [weak self] photos in
             switch photos {
             case .success(let photo):
-                self.showSpinner(onView: self.view)
-                self.photoList.append(contentsOf: photo)
+                self!.showSpinner(onView: self!.view)
+                self!.photoList.append(contentsOf: photo)
                 DispatchQueue.main.async {
-                    self.photoCollectionView.reloadData()
-                    self.removeSpinner()
+                    self!.photoCollectionView.reloadData()
+                    self!.removeSpinner()
                 }
             case .failure(let error):
                 print(error)
@@ -57,14 +62,32 @@ class PhotoListViewController: UIViewController {
 
 extension PhotoListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(photoList.count)
         return photoList.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.photoCVCell, for: indexPath) as! PhotoCollectionViewCell
-        let url = URL(string: photoList[indexPath.row].urls.raw)
-        UIImage.loadFrom(url: url!) { image in
-            cell.photoView.image = image
+        
+        let photo = self.photoList[indexPath.row]
+        cell.image = nil
+        let representedIdentifier = photo.id
+        cell.representedIdentifier = representedIdentifier
+        
+        func image(data: Data?) -> UIImage? {
+            if let data = data {
+                return UIImage(data: data)
+            }
+            return UIImage(systemName: "photo")
+        }
+        
+        NetworkManager().loadImage(post: photo) { data, error  in
+            let img = image(data: data)
+            DispatchQueue.main.async {
+                if (cell.representedIdentifier == representedIdentifier) {
+                    cell.image = img
+                }
+            }
         }
         return cell
     }
@@ -75,17 +98,62 @@ extension PhotoListViewController: UICollectionViewDataSource, UICollectionViewD
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if self.isLoading {
+            return CGSize.zero
+        } else {
+            return CGSize(width: collectionView.bounds.size.width, height: 44)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionFooter {
+            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "loadingCRV", for: indexPath) as! LoadingCollectionReusableView
+            loadingView = aFooterView
+            loadingView?.backgroundColor = UIColor.clear
+            return aFooterView
+        }
+        return UICollectionReusableView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        if elementKind == UICollectionView.elementKindSectionFooter {
+            self.loadingView?.activityIndicator.startAnimating()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        if elementKind == UICollectionView.elementKindSectionFooter {
+            self.loadingView?.activityIndicator.stopAnimating()
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if page < totalPage && indexPath.row == photoList.count - 1 {
-            page += 1
-            self.getPhotos()
+        if indexPath.row == photoList.count - 6 && !self.isLoading {
+            loadMoreData()
+        }
+    }
+    
+    func loadMoreData() {
+        if !self.isLoading {
+            self.isLoading = true
+            DispatchQueue.global().async {
+                sleep(2)
+                DispatchQueue.main.async {
+                    self.photoCollectionView.reloadData()
+                    self.isLoading = false
+                }
+            }
         }
     }
 }
 
 extension PhotoListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = (collectionView.frame.size.width - 2) / 3
+        var size = (collectionView.frame.size.width - 2) / 3
+        if UIDevice.current.orientation.isLandscape {
+            size = (collectionView.frame.size.width - 2) / 6
+        }
         return CGSize(width: size, height: size)
     }
 }

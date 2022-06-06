@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PhotoDetailViewController: UIViewController {
     //MARK: Outlets
     @IBOutlet weak var detailImageView: UIImageView!
+    @IBOutlet weak var saveButtonView: UIButton!
+    @IBOutlet weak var shareButtonView: UIButton!
     
     //MARK: Properties
     var photoDetail: PhotosResponseModel!
@@ -17,11 +20,27 @@ class PhotoDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let url = URL(string: photoDetail!.urls.full)
-        UIImage.loadFrom(url: url!) { image in
-            self.detailImageView.image = image
-        }
+        saveButtonView.layer.cornerRadius = saveButtonView.frame.height / 2
+        saveButtonView.layer.borderColor = UIColor.link.cgColor
+        saveButtonView.layer.borderWidth = 1
+        
+        shareButtonView.layer.cornerRadius = shareButtonView.frame.height / 2
+        shareButtonView.layer.borderColor = UIColor.link.cgColor
+        shareButtonView.layer.borderWidth = 1
+        
+        self.getPhoto()
         tabBarController?.tabBar.isHidden = true
+    }
+    
+    func getPhoto() {
+        self.showSpinner(onView: self.view)
+        let url = URL(string: photoDetail!.urls.full)
+        DispatchQueue.main.async {
+            UIImage.loadFrom(url: url!) { image in
+                self.detailImageView.image = image
+            }
+            self.removeSpinner()
+        }
     }
     
     //MARK: Save photo action

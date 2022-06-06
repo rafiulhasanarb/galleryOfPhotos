@@ -6,10 +6,13 @@
 //
 
 import Foundation
+import UIKit
 
 class NetworkManager {
     let aPIHandler: APIHandler
     let responseHandler: ResponseHandler
+    //MARK: Cache Images
+    private var images = NSCache<NSString, NSData>()
     
     init(aPIHandler: APIHandler = APIHandler(), responseHandler: ResponseHandler = ResponseHandler()) {
         self.aPIHandler = aPIHandler
@@ -34,5 +37,49 @@ class NetworkManager {
                 completion(.failure(error))
             }
         }
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        return directoryURL!
+    }
+    
+    func loadImage(post: PhotosResponseModel, completion: @escaping (Data?, Error?) -> (Void)) {
+        let url = URL(string: post.urls.small)!
+        download(imageURL: url, completion: completion)
+    }
+    
+    private func download(imageURL: URL, completion: @escaping (Data?, Error?) -> (Void)) {
+        if let imageData = images.object(forKey: imageURL.absoluteString as NSString) {
+            print("using cached images")
+            completion(imageData as Data, nil)
+            return
+        }
+        
+        let task = URLSession.shared.downloadTask(with: imageURL) { localUrl, response, error in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+                completion(nil, CustomError.badResponse)
+                return
+            }
+            
+            guard let localUrl = localUrl else {
+                completion(nil, CustomError.BadURL)
+                return
+            }
+            
+            do {
+                let data = try Data(contentsOf: localUrl)
+                self.images.setObject(data as NSData, forKey: imageURL.absoluteString as NSString)
+                completion(data, nil)
+            } catch let error {
+                completion(nil, error)
+            }
+        }
+        task.resume()
     }
 }
