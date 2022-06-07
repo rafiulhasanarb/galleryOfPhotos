@@ -6,13 +6,14 @@
 //
 
 import UIKit
-import SDWebImage
 
 class PhotoDetailViewController: UIViewController {
     //MARK: Outlets
     @IBOutlet weak var detailImageView: UIImageView!
     @IBOutlet weak var saveButtonView: UIButton!
     @IBOutlet weak var shareButtonView: UIButton!
+    @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var percentageLabel: UILabel!
     
     //MARK: Properties
     var photoDetail: PhotosResponseModel!
@@ -27,7 +28,9 @@ class PhotoDetailViewController: UIViewController {
         shareButtonView.layer.cornerRadius = shareButtonView.frame.height / 2
         shareButtonView.layer.borderColor = UIColor.link.cgColor
         shareButtonView.layer.borderWidth = 1
-        
+        progressBar.progress = 0
+        progressBar.isHidden = true
+        percentageLabel.isHidden = true
         self.getPhoto()
         tabBarController?.tabBar.isHidden = true
     }
@@ -35,7 +38,7 @@ class PhotoDetailViewController: UIViewController {
     func getPhoto() {
         self.showSpinner(onView: self.view)
         let url = URL(string: photoDetail!.urls.full)
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             UIImage.loadFrom(url: url!) { image in
                 self.detailImageView.image = image
             }
@@ -45,6 +48,10 @@ class PhotoDetailViewController: UIViewController {
     
     //MARK: Save photo action
     @IBAction func savePhoto(_ sender: UIButton) {
+        progressBar.isHidden = false
+        percentageLabel.isHidden = false
+        saveButtonView.isEnabled = false
+        shareButtonView.isEnabled = false
         let imageURLString = photoDetail!.links.download
         guard let imageURL = URL(string: imageURLString) else { return }
         self.getDataFromUrl(url: imageURL) { (data, response, error) in
@@ -61,6 +68,8 @@ class PhotoDetailViewController: UIViewController {
     }
     
     private func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        session.downloadTask(with: url).resume()
         URLSession.shared.dataTask(with: url) { data, response, error in
             completion(data, response, error)
         }.resume()
@@ -76,5 +85,25 @@ class PhotoDetailViewController: UIViewController {
         
         activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook, UIActivity.ActivityType.postToVimeo, UIActivity.ActivityType.postToFlickr, UIActivity.ActivityType.mail, UIActivity.ActivityType.sharePlay]
         self.present(activityViewController, animated: true, completion: nil)
+    }
+}
+
+extension PhotoDetailViewController: URLSessionDownloadDelegate {
+    // MARK: protocol stub for download completion tracking
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        DispatchQueue.main.async { [weak self] in
+            self!.progressBar.isHidden = true
+            self!.percentageLabel.isHidden = true
+            self!.saveButtonView.isEnabled = true
+            self!.shareButtonView.isEnabled = true
+        }
+    }
+    // MARK: protocol stubs for tracking download progress
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        let percentDownloaded = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+        DispatchQueue.main.async { [weak self] in
+            self!.percentageLabel.text = "\(percentDownloaded * 100)%"
+            self!.progressBar.progress = percentDownloaded
+        }
     }
 }

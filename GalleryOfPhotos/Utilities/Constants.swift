@@ -20,4 +20,6 @@ struct Constants {
     static let photoCVCell = "PhotoCollectionViewCell"
     static let photoDetailVC = "PhotoDetailViewController"
     static let SavedPhotoVC = "SavedPhotoViewController"
+    static let loadingReusableView = "LoadingCollectionReusableView"
+    static let loadingCRV = "loadingCRV"
 }

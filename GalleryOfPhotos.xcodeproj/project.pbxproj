@@ -11,7 +11,6 @@
 		B149C5C8284BC5570048655E /* ResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B149C5C7284BC5570048655E /* ResponseHandler.swift */; };
 		B149C5CA284BC5B20048655E /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B149C5C9284BC5B20048655E /* CustomError.swift */; };
 		B149C5CD284BC9CA0048655E /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B149C5CC284BC9CA0048655E /* UIViewControllerExtension.swift */; };
-		B1681357284E4E1E0043EEB3 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = B1681356284E4E1E0043EEB3 /* SDWebImage */; };
 		B168135A284E79640043EEB3 /* LoadingCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1681358284E79640043EEB3 /* LoadingCollectionReusableView.swift */; };
 		B168135B284E79640043EEB3 /* LoadingCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1681359284E79640043EEB3 /* LoadingCollectionReusableView.xib */; };
 		B182074A28499EAF00AFD010 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182074828499EAF00AFD010 /* PhotoCollectionViewCell.swift */; };
@@ -68,7 +67,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1681357284E4E1E0043EEB3 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +218,6 @@
 			);
 			name = GalleryOfPhotos;
 			packageProductDependencies = (
-				B1681356284E4E1E0043EEB3 /* SDWebImage */,
 			);
 			productName = GalleryOfPhotos;
 			productReference = B1D2A3EC28491063003728DD /* GalleryOfPhotos.app */;
@@ -251,7 +248,6 @@
 			);
 			mainGroup = B1D2A3E328491063003728DD;
 			packageReferences = (
-				B1681355284E4E1E0043EEB3 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = B1D2A3ED28491063003728DD /* Products */;
 			projectDirPath = "";
@@ -518,25 +514,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		B1681355284E4E1E0043EEB3 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		B1681356284E4E1E0043EEB3 /* SDWebImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B1681355284E4E1E0043EEB3 /* XCRemoteSwiftPackageReference "SDWebImage" */;
-			productName = SDWebImage;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B1D2A3E428491063003728DD /* Project object */;
 }

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 class PhotoListViewController: UIViewController {
     //MARK: Outlets
@@ -26,8 +25,8 @@ class PhotoListViewController: UIViewController {
         photoCollectionView.delegate = self
         photoCollectionView.register(UINib(nibName: Constants.photoCVCell, bundle: nil), forCellWithReuseIdentifier: Constants.photoCVCell)
         //Register Loading Reuseable View
-        let loadingReusableNib = UINib(nibName: "LoadingCollectionReusableView", bundle: nil)
-        photoCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingCRV")
+        let loadingReusableNib = UINib(nibName: Constants.loadingReusableView, bundle: nil)
+        photoCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: Constants.loadingCRV)
         //MARK: CollectionView layout
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -44,7 +43,7 @@ class PhotoListViewController: UIViewController {
     }
     
     private func getPhotos() {
-        NetworkManager().fetchRequest(type: [PhotosResponseModel].self, url: URL(string: Constants.url)!) { [weak self] photos in
+        NetworkManager().fetchRequest(type: [PhotosResponseModel].self, url: URL(string: Constants.url+"&page=\(self.page)")!) { [weak self] photos in
             switch photos {
             case .success(let photo):
                 self!.showSpinner(onView: self!.view)
@@ -81,7 +80,7 @@ extension PhotoListViewController: UICollectionViewDataSource, UICollectionViewD
             return UIImage(systemName: "photo")
         }
         
-        NetworkManager().loadImage(post: photo) { data, error  in
+        NetworkManager().loadImage(photo: photo) { data, error  in
             let img = image(data: data)
             DispatchQueue.main.async {
                 if (cell.representedIdentifier == representedIdentifier) {
@@ -108,7 +107,7 @@ extension PhotoListViewController: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionFooter {
-            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "loadingCRV", for: indexPath) as! LoadingCollectionReusableView
+            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.loadingCRV, for: indexPath) as! LoadingCollectionReusableView
             loadingView = aFooterView
             loadingView?.backgroundColor = UIColor.clear
             return aFooterView
@@ -129,21 +128,9 @@ extension PhotoListViewController: UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == photoList.count - 6 && !self.isLoading {
-            loadMoreData()
-        }
-    }
-    
-    func loadMoreData() {
-        if !self.isLoading {
-            self.isLoading = true
-            DispatchQueue.global().async {
-                sleep(2)
-                DispatchQueue.main.async {
-                    self.photoCollectionView.reloadData()
-                    self.isLoading = false
-                }
-            }
+        if page < totalPage && indexPath.row == photoList.count - 1 {
+            self.page += 1
+            self.getPhotos()
         }
     }
 }

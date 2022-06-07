@@ -19,6 +19,7 @@ class NetworkManager {
         self.responseHandler = responseHandler
     }
     
+    //MARK: Parsing method
     func fetchRequest<T: Codable>(type: T.Type, url: URL, completion: @escaping(Result<T, CustomError>) -> Void) {
         aPIHandler.fetchData(url: url) { result in
             switch result {
@@ -39,13 +40,9 @@ class NetworkManager {
         }
     }
     
-    func getDocumentsDirectory() -> URL {
-        let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        return directoryURL!
-    }
-    
-    func loadImage(post: PhotosResponseModel, completion: @escaping (Data?, Error?) -> (Void)) {
-        let url = URL(string: post.urls.small)!
+    //MARK: Cache method
+    func loadImage(photo: PhotosResponseModel, completion: @escaping (Data?, Error?) -> (Void)) {
+        let url = URL(string: photo.urls.small)!
         download(imageURL: url, completion: completion)
     }
     

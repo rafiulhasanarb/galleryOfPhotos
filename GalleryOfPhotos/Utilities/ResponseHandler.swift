@@ -9,9 +9,9 @@ import Foundation
 
 class ResponseHandler {
     func fetchModel<T: Codable>(type: T.Type, data: Data, completion: (Result<T, CustomError>) -> Void) {
-        let commentResponse = try? JSONDecoder().decode(type.self, from: data)
-        if let commentResponse = commentResponse {
-            return completion(.success(commentResponse))
+        let photoResponse = try? JSONDecoder().decode(type.self, from: data)
+        if let photoResponse = photoResponse {
+            return completion(.success(photoResponse))
         } else {
             completion(.failure(.DecodingError))
         }

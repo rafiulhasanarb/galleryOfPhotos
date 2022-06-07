@@ -20,8 +20,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nDg-dl-Eds">
                         <rect key="frame" x="0.0" y="0.0" width="136" height="147"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nOy-Yr-moe" customClass="CacheImageView" customModule="GalleryOfPhotos" customModuleProvider="target">
-                                <rect key="frame" x="4" y="4" width="128" height="139"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="nOy-Yr-moe" customClass="CacheImageView" customModule="GalleryOfPhotos" customModuleProvider="target">
+                                <rect key="frame" x="4" y="5" width="128" height="136.5"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -49,6 +50,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="photo" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

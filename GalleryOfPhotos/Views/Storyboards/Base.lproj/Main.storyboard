@@ -54,15 +54,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ig9-0e-h0c">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ig9-0e-h0c">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="a4U-HX-sVN">
+                                <rect key="frame" x="20" y="782" width="374" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="12" id="xRs-dX-tdf"/>
+                                </constraints>
+                            </progressView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="PIT-OW-wne">
                                 <rect key="frame" x="20" y="802" width="374" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pVV-Kp-qQz">
                                         <rect key="frame" x="0.0" y="0.0" width="177" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" systemColor="tintColor"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Save To Gallery">
@@ -74,6 +81,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q6z-Lm-KxX">
                                         <rect key="frame" x="197" y="0.0" width="177" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Share">
                                             <color key="titleColor" systemColor="linkColor"/>
@@ -87,17 +95,34 @@
                                     <constraint firstAttribute="height" constant="40" id="f8f-bC-0QT"/>
                                 </constraints>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="go7-d6-8RS">
+                                <rect key="frame" x="20" y="754" width="374" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Jvz-JU-HsQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="YLs-A6-Q9l"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="a4U-HX-sVN" firstAttribute="leading" secondItem="YLs-A6-Q9l" secondAttribute="leading" constant="20" id="0eb-HY-N66"/>
+                            <constraint firstItem="a4U-HX-sVN" firstAttribute="top" secondItem="go7-d6-8RS" secondAttribute="bottom" constant="8" symbolic="YES" id="TEo-Rt-sfd"/>
+                            <constraint firstItem="YLs-A6-Q9l" firstAttribute="trailing" secondItem="a4U-HX-sVN" secondAttribute="trailing" constant="20" id="Xrw-3V-D4Q"/>
                             <constraint firstItem="YLs-A6-Q9l" firstAttribute="bottom" secondItem="PIT-OW-wne" secondAttribute="bottom" constant="20" id="lDI-Zy-beA"/>
                             <constraint firstItem="YLs-A6-Q9l" firstAttribute="trailing" secondItem="PIT-OW-wne" secondAttribute="trailing" constant="20" id="tK9-x4-Ac5"/>
+                            <constraint firstItem="YLs-A6-Q9l" firstAttribute="trailing" secondItem="go7-d6-8RS" secondAttribute="trailing" constant="20" id="wUh-Rt-HLY"/>
                             <constraint firstItem="PIT-OW-wne" firstAttribute="leading" secondItem="YLs-A6-Q9l" secondAttribute="leading" constant="20" id="xC8-c3-Ya3"/>
+                            <constraint firstItem="PIT-OW-wne" firstAttribute="top" secondItem="a4U-HX-sVN" secondAttribute="bottom" constant="8" id="xlR-4e-xZS"/>
+                            <constraint firstItem="go7-d6-8RS" firstAttribute="leading" secondItem="YLs-A6-Q9l" secondAttribute="leading" constant="20" id="zRy-T2-FYt"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="detailImageView" destination="Ig9-0e-h0c" id="1uY-yh-Inu"/>
+                        <outlet property="percentageLabel" destination="go7-d6-8RS" id="hQZ-ci-Ukp"/>
+                        <outlet property="progressBar" destination="a4U-HX-sVN" id="sgC-Tg-Qzd"/>
                         <outlet property="saveButtonView" destination="pVV-Kp-qQz" id="4yK-gX-Vxd"/>
                         <outlet property="shareButtonView" destination="q6z-Lm-KxX" id="szX-UH-xJO"/>
                     </connections>
