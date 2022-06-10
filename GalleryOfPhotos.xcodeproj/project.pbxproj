@@ -11,6 +11,7 @@
 		B149C5C8284BC5570048655E /* ResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B149C5C7284BC5570048655E /* ResponseHandler.swift */; };
 		B149C5CA284BC5B20048655E /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B149C5C9284BC5B20048655E /* CustomError.swift */; };
 		B149C5CD284BC9CA0048655E /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B149C5CC284BC9CA0048655E /* UIViewControllerExtension.swift */; };
+		B1622BC4285320CD00F0B7EB /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1622BC3285320CD00F0B7EB /* ProfileModel.swift */; };
 		B168135A284E79640043EEB3 /* LoadingCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1681358284E79640043EEB3 /* LoadingCollectionReusableView.swift */; };
 		B168135B284E79640043EEB3 /* LoadingCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1681359284E79640043EEB3 /* LoadingCollectionReusableView.xib */; };
 		B182074A28499EAF00AFD010 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182074828499EAF00AFD010 /* PhotoCollectionViewCell.swift */; };
@@ -21,6 +22,7 @@
 		B1A837A8284DC9F100FD2F84 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A837A7284DC9F100FD2F84 /* UserModel.swift */; };
 		B1A837AA284DCACE00FD2F84 /* ProfileImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A837A9284DCACE00FD2F84 /* ProfileImageModel.swift */; };
 		B1A837B0284DE31300FD2F84 /* DownloadedImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A837AF284DE31300FD2F84 /* DownloadedImageModel.swift */; };
+		B1BA0CBD28534ABD002B31E0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BA0CBC28534ABD002B31E0 /* ProfileViewController.swift */; };
 		B1C89B32284B4BC9002A4B25 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C89B31284B4BC9002A4B25 /* UIImageExtension.swift */; };
 		B1C89B38284B6229002A4B25 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C89B37284B6229002A4B25 /* PhotoDetailViewController.swift */; };
 		B1C89B3B284B7DB2002A4B25 /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C89B3A284B7DB2002A4B25 /* URLExtension.swift */; };
@@ -38,6 +40,7 @@
 		B149C5C7284BC5570048655E /* ResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseHandler.swift; sourceTree = "<group>"; };
 		B149C5C9284BC5B20048655E /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		B149C5CC284BC9CA0048655E /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		B1622BC3285320CD00F0B7EB /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		B1681358284E79640043EEB3 /* LoadingCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCollectionReusableView.swift; sourceTree = "<group>"; };
 		B1681359284E79640043EEB3 /* LoadingCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCollectionReusableView.xib; sourceTree = "<group>"; };
 		B182074828499EAF00AFD010 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -48,6 +51,7 @@
 		B1A837A7284DC9F100FD2F84 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		B1A837A9284DCACE00FD2F84 /* ProfileImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageModel.swift; sourceTree = "<group>"; };
 		B1A837AF284DE31300FD2F84 /* DownloadedImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedImageModel.swift; sourceTree = "<group>"; };
+		B1BA0CBC28534ABD002B31E0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		B1C89B31284B4BC9002A4B25 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		B1C89B37284B6229002A4B25 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		B1C89B3A284B7DB2002A4B25 /* URLExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 				B1A837AF284DE31300FD2F84 /* DownloadedImageModel.swift */,
 				B1A837A7284DC9F100FD2F84 /* UserModel.swift */,
 				B1A837A9284DCACE00FD2F84 /* ProfileImageModel.swift */,
+				B1622BC3285320CD00F0B7EB /* ProfileModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 				B1D2A3F328491063003728DD /* PhotoListViewController.swift */,
 				B1C89B37284B6229002A4B25 /* PhotoDetailViewController.swift */,
 				B1D77843284D09EF00C19618 /* SavedPhotoViewController.swift */,
+				B1BA0CBC28534ABD002B31E0 /* ProfileViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -293,8 +299,10 @@
 				B149C5CA284BC5B20048655E /* CustomError.swift in Sources */,
 				B18207542849AE7F00AFD010 /* Constants.swift in Sources */,
 				B1C89B32284B4BC9002A4B25 /* UIImageExtension.swift in Sources */,
+				B1622BC4285320CD00F0B7EB /* ProfileModel.swift in Sources */,
 				B1D2A3F028491063003728DD /* AppDelegate.swift in Sources */,
 				B1D2A3F228491063003728DD /* SceneDelegate.swift in Sources */,
+				B1BA0CBD28534ABD002B31E0 /* ProfileViewController.swift in Sources */,
 				B18207562849B03C00AFD010 /* PhotoListResponses.swift in Sources */,
 				B1C89B38284B6229002A4B25 /* PhotoDetailViewController.swift in Sources */,
 			);

@@ -42,6 +42,26 @@ class NetworkManager {
         }
     }
     
+    func fetchProfile<T: Codable>(type: T.Type, url: URL, completion: @escaping(Result<T, CustomError>) -> Void) {
+        aPIHandler.fetchData(url: url) { result in
+            switch result {
+            case .success(let data):
+                self.responseHandler.fetchModel(type: type, data: data) { decodedResult in
+                    switch decodedResult {
+                    case .success(let model):
+                        DispatchQueue.main.async {
+                            completion(.success(model))
+                        }
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     //MARK: Cache method
     func loadImage(photo: PhotosResponseModel, completion: @escaping (Data?, Error?) -> (Void)) {
         let url = URL(string: photo.urls.small)!

@@ -15,10 +15,13 @@ struct Constants {
     static let orderBy = "latest"
     static let perPage = 30
     static let url = "\(Constants.baseurl)\(Constants.photos)?client_id=\(Constants.clientId)&per_page=\(perPage)&order_by=\(Constants.orderBy)"
+    static let userName = "rafiulhasanarb"
+    static let profileURL =  "\(Constants.baseurl)users/\(userName)?client_id=\(Constants.clientId)"
     
     //MARK: identifiers for Controller
     static let photoDetailVC = "PhotoDetailViewController"
     static let SavedPhotoVC = "SavedPhotoViewController"
+    static let profileVC = "ProfileViewController"
     
     //MARK: identifiers for cell
     static let photoCVCell = "PhotoCollectionViewCell"
