@@ -8,8 +8,10 @@
 import UIKit
 
 class PhotoCollectionViewCell: UICollectionViewCell {
-    
+    //MARK: outlet
     @IBOutlet weak var photoView: UIImageView!
+    
+    //MARK: Properties
     var representedIdentifier: String = ""
     
     override func awakeFromNib() {

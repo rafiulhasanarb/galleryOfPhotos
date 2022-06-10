@@ -10,13 +10,16 @@ import Photos
 
 class SavedPhotoViewController: UIViewController {
 
+    //MARK: outlets
     @IBOutlet weak var savedPhotoCollectionView: UICollectionView!
+    
+    //MARK: prperties
     var photo: UIImage?
     var images = [UIImage]()
     
+    //MARK: view life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         savedPhotoCollectionView.dataSource = self
         savedPhotoCollectionView.delegate = self
@@ -32,6 +35,7 @@ class SavedPhotoViewController: UIViewController {
         self.getPhoto()
     }
     
+    //MARK: methods
     fileprivate func getPhoto() {
         let manager = PHImageManager.default()
         let requestOptions = PHImageRequestOptions()
@@ -102,7 +106,8 @@ class SavedPhotoViewController: UIViewController {
     }
 }
 
-extension SavedPhotoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+//MARK: extensions for delegate and datasource
+extension SavedPhotoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(images.count)
         return images.count
@@ -115,6 +120,7 @@ extension SavedPhotoViewController: UICollectionViewDataSource, UICollectionView
     }
 }
 
+//MARK: extensions for delegate
 extension SavedPhotoViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var size = (collectionView.frame.size.width - 2) / 3

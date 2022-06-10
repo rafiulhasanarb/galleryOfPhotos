@@ -9,11 +9,13 @@ import Foundation
 import UIKit
 
 class NetworkManager {
+    //MARK: objects
     let aPIHandler: APIHandler
     let responseHandler: ResponseHandler
     //MARK: Cache Images
     private var images = NSCache<NSString, NSData>()
     
+    //MARK: initialization
     init(aPIHandler: APIHandler = APIHandler(), responseHandler: ResponseHandler = ResponseHandler()) {
         self.aPIHandler = aPIHandler
         self.responseHandler = responseHandler
@@ -48,7 +50,6 @@ class NetworkManager {
     
     private func download(imageURL: URL, completion: @escaping (Data?, Error?) -> (Void)) {
         if let imageData = images.object(forKey: imageURL.absoluteString as NSString) {
-            print("using cached images")
             completion(imageData as Data, nil)
             return
         }

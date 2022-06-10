@@ -8,6 +8,7 @@
 import Foundation
 
 class ResponseHandler {
+    //MARK: Response handler method
     func fetchModel<T: Codable>(type: T.Type, data: Data, completion: (Result<T, CustomError>) -> Void) {
         let photoResponse = try? JSONDecoder().decode(type.self, from: data)
         if let photoResponse = photoResponse {

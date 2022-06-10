@@ -16,10 +16,12 @@ struct Constants {
     static let perPage = 30
     static let url = "\(Constants.baseurl)\(Constants.photos)?client_id=\(Constants.clientId)&per_page=\(perPage)&order_by=\(Constants.orderBy)"
     
-    //MARK: identifiers
-    static let photoCVCell = "PhotoCollectionViewCell"
+    //MARK: identifiers for Controller
     static let photoDetailVC = "PhotoDetailViewController"
     static let SavedPhotoVC = "SavedPhotoViewController"
+    
+    //MARK: identifiers for cell
+    static let photoCVCell = "PhotoCollectionViewCell"
     static let loadingReusableView = "LoadingCollectionReusableView"
     static let loadingCRV = "loadingCRV"
 }

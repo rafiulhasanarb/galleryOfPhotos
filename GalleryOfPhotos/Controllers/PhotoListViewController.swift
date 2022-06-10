@@ -24,7 +24,7 @@ class PhotoListViewController: UIViewController {
         photoCollectionView.dataSource = self
         photoCollectionView.delegate = self
         photoCollectionView.register(UINib(nibName: Constants.photoCVCell, bundle: nil), forCellWithReuseIdentifier: Constants.photoCVCell)
-        //Register Loading Reuseable View
+        //MARK: Register Loading Reuseable View
         let loadingReusableNib = UINib(nibName: Constants.loadingReusableView, bundle: nil)
         photoCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: Constants.loadingCRV)
         //MARK: CollectionView layout
@@ -59,6 +59,7 @@ class PhotoListViewController: UIViewController {
     }
 }
 
+//MARK: extensions for datasource and delegate
 extension PhotoListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(photoList.count)
@@ -109,7 +110,7 @@ extension PhotoListViewController: UICollectionViewDataSource, UICollectionViewD
         if kind == UICollectionView.elementKindSectionFooter {
             let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.loadingCRV, for: indexPath) as! LoadingCollectionReusableView
             loadingView = aFooterView
-            loadingView?.backgroundColor = UIColor.clear
+            loadingView?.backgroundColor = UIColor.lightGray
             return aFooterView
         }
         return UICollectionReusableView()
@@ -135,6 +136,7 @@ extension PhotoListViewController: UICollectionViewDataSource, UICollectionViewD
     }
 }
 
+//MARK: extensions for delegate
 extension PhotoListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var size = (collectionView.frame.size.width - 2) / 3

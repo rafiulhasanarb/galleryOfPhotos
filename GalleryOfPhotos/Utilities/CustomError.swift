@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: custom enum
 enum CustomError: Error {
     case BadURL
     case NoData

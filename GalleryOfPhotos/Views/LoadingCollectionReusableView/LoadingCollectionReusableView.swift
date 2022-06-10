@@ -9,6 +9,7 @@ import UIKit
 
 class LoadingCollectionReusableView: UICollectionReusableView {
     
+    //MARK: outlets
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {

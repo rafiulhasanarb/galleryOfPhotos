@@ -188,12 +188,12 @@
 		B1D2A3EE28491063003728DD /* GalleryOfPhotos */ = {
 			isa = PBXGroup;
 			children = (
-				B1C89B30284B4BAA002A4B25 /* Extensions */,
 				B18207522849A68000AFD010 /* Delegates */,
-				B18207512849A66200AFD010 /* Models */,
-				B1C89B36284B5B22002A4B25 /* Controllers */,
+				B1C89B30284B4BAA002A4B25 /* Extensions */,
 				B1C89B33284B5ADF002A4B25 /* Utilities */,
 				B1C89B34284B5AF3002A4B25 /* NetworkManager */,
+				B18207512849A66200AFD010 /* Models */,
+				B1C89B36284B5B22002A4B25 /* Controllers */,
 				B149C5CB284BC6400048655E /* Views */,
 				B1D2A3F828491068003728DD /* Assets.xcassets */,
 				B1D2A3FD28491068003728DD /* Info.plist */,

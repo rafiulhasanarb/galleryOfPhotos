@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 extension UIImage {
-    //MARK: Image loading method
+    //MARK: Image loading from url method
     public static func loadFrom(url: URL, completion: @escaping (_ image: UIImage?) -> ()) {
         DispatchQueue.global().async {
             if let data = try? Data(contentsOf: url) {

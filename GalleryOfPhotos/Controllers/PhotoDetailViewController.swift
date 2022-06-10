@@ -18,6 +18,7 @@ class PhotoDetailViewController: UIViewController {
     //MARK: Properties
     var photoDetail: PhotosResponseModel!
     
+    //MARK: view life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,17 +34,6 @@ class PhotoDetailViewController: UIViewController {
         percentageLabel.isHidden = true
         self.getPhoto()
         tabBarController?.tabBar.isHidden = true
-    }
-    
-    func getPhoto() {
-        self.showSpinner(onView: self.view)
-        let url = URL(string: photoDetail!.urls.full)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            UIImage.loadFrom(url: url!) { image in
-                self.detailImageView.image = image
-            }
-            self.removeSpinner()
-        }
     }
     
     //MARK: Save photo action
@@ -64,6 +54,18 @@ class PhotoDetailViewController: UIViewController {
                 alert.addAction(okAction)
                 self.present(alert, animated: true)
             }
+        }
+    }
+    
+    //MARK: Methods
+    func getPhoto() {
+        self.showSpinner(onView: self.view)
+        let url = URL(string: photoDetail!.urls.full)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            UIImage.loadFrom(url: url!) { image in
+                self.detailImageView.image = image
+            }
+            self.removeSpinner()
         }
     }
     
@@ -88,6 +90,7 @@ class PhotoDetailViewController: UIViewController {
     }
 }
 
+//MARK: extensions for delegate
 extension PhotoDetailViewController: URLSessionDownloadDelegate {
     // MARK: protocol stub for download completion tracking
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
