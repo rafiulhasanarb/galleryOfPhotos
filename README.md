@@ -8,6 +8,7 @@
 2. Photo screen infinite scoll with cache images
 3. Detail screen with save and share button, when save button is clicked it show a progressbar, progress label
 4. Saved Screen show the local saved images from server
+5. Profile Screen that show the current user details
 
 # Features
 1. Unit tests
