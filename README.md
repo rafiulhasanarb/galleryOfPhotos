@@ -3,7 +3,7 @@
 2. The user can tap the photo and can see a full-screen view of the photo
 3. The user has an infinite scroll on the gallery screen
 
-#Screens
+# Screens
 1. Splash screen with Unsplash logo and title
 2. Photo screen infinite scoll with cache images
 3. Detail screen with save and share button, when save button is clicked it show a progressbar, progress label
