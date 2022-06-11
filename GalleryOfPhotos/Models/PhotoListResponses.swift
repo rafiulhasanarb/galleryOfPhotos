@@ -11,7 +11,7 @@ import Foundation
 struct PhotosResponseModel: Codable {
     let id: String
     let width, height: Int
-    let color, blurHash: String
+    //let color, blurHash: String
     let photoResponseDescription, altDescription: String?
     let urls: Urls
     let links: PhotoResponseLinks
@@ -24,8 +24,8 @@ struct PhotosResponseModel: Codable {
 
     enum CodingKeys: String, CodingKey {
         case id
-        case width, height, color
-        case blurHash = "blur_hash"
+        case width, height//, color
+        //case blurHash = "blur_hash"
         case photoResponseDescription = "description"
         case altDescription = "alt_description"
         case urls, links, categories, likes

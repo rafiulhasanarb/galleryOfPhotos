@@ -15,7 +15,7 @@ struct Constants {
     static let orderBy = "latest"
     static let perPage = 30
     static let url = "\(Constants.baseurl)\(Constants.photos)?client_id=\(Constants.clientId)&per_page=\(perPage)&order_by=\(Constants.orderBy)"
-    static let userName = "rafiulhasanarb"
+    static let userName = "mikeaustin"//"rafiulhasanarb"
     static let profileURL =  "\(Constants.baseurl)users/\(userName)?client_id=\(Constants.clientId)"
     
     //MARK: identifiers for Controller
