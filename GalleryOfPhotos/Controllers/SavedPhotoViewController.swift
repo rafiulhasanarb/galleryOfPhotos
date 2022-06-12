@@ -9,7 +9,7 @@ import UIKit
 import Photos
 
 class SavedPhotoViewController: UIViewController {
-
+    
     //MARK: outlets
     @IBOutlet weak var savedPhotoCollectionView: UICollectionView!
     
@@ -31,8 +31,12 @@ class SavedPhotoViewController: UIViewController {
         layout.minimumInteritemSpacing = 0
         savedPhotoCollectionView.collectionViewLayout = layout
         savedPhotoCollectionView.reloadData()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.getPhoto()
+        self.savedPhotoCollectionView.reloadData()
     }
     
     //MARK: methods
@@ -62,57 +66,14 @@ class SavedPhotoViewController: UIViewController {
             print("no photos to display")
         }
     }
-    
-    //MARK: fetch from custom Album
-    func fetchCustomAlbumPhotos() {
-        let albumName = "Unsplash"
-        var assetCollection = PHAssetCollection()
-        var albumFound: Bool = false
-        var photoAssets = PHFetchResult<AnyObject>()
-        let fetchOptions = PHFetchOptions()
-
-        fetchOptions.predicate = NSPredicate(format: "title = %@", albumName)
-        let collection:PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
-
-        if let firstObject = collection.firstObject {
-            assetCollection = firstObject
-            albumFound = true
-        } else { albumFound = false }
-        _ = collection.count
-        
-        photoAssets = PHAsset.fetchAssets(in: assetCollection, options: nil) as! PHFetchResult<AnyObject>
-        let imageManager = PHCachingImageManager()
-        photoAssets.enumerateObjects{(object: AnyObject!, count: Int, stop: UnsafeMutablePointer<ObjCBool>) in
-            if object is PHAsset {
-                let asset = object as! PHAsset
-                print("Inside  If object is PHAsset, This is number 1")
-                let imageSize = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
-
-                let options = PHImageRequestOptions()
-                options.deliveryMode = .fastFormat
-                options.isSynchronous = true
-
-                imageManager.requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFill, options: options, resultHandler: { (image, info) -> Void in
-                    self.photo = image!
-                    self.addImgToArray(uploadImage: self.photo!)
-                    print("enum for image, This is number 2")
-                })
-            }
-        }
-    }
-
-    func addImgToArray(uploadImage: UIImage) {
-        self.images.append(uploadImage)
-    }
 }
 
 //MARK: extensions for delegate and datasource
 extension SavedPhotoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(images.count)
         return images.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.photoCVCell, for: indexPath) as! PhotoCollectionViewCell
         cell.photoView.image = images[indexPath.item]
